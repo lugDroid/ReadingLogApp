@@ -1,0 +1,42 @@
+@page
+@model ReadingLog.App.Pages.Authors.ListModel
+@{
+    ViewData["Title"] = "Authors";
+}
+
+<h3>Authors</h3>
+
+<form method="GET">
+    <div class="form-group">
+        <div class="input-group">
+            <input type="search" class="form-control" asp-for="SearchTerm"/>
+            <div class="input-group-append">
+                <button class="btn btn-outline-dark">Search</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<table class="table table-sm table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Reading</th>
+            <th>Finished</th>
+            <th>Abandoned</th>
+            <th>To Read</th>
+        </tr>
+    </thead>
+    @foreach (var author in Model.Authors)
+    {
+        <tr onclick="location.href = '@(Url.Page("Edit", new { authorId = author.Id}))'">
+            <td>@author.FirstName @author.LastName</td>
+            <td>@author.GetBooksCount(Core.Status.Reading)</td>
+            <td>@author.GetBooksCount(Core.Status.Finished)</td>
+            <td>@author.GetBooksCount(Core.Status.Abandoned)</td>
+            <td>@author.GetBooksCount(Core.Status.ToRead)</td>
+        </tr>
+    }
+</table>
+
+<a asp-page="./Edit" class="btn btn.sm btn-primary">Add New</a>

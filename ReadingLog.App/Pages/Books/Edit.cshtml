@@ -1,0 +1,49 @@
+@page "{bookId:int?}"
+@model ReadingLog.App.Pages.Books.EditModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h3>Edit Book</h3>
+
+<form method="post">
+    <input type="hidden" asp-for="Book.Id" />
+    
+    <div class="form-group">
+        <label asp-for="Book.Title">Book Title</label>
+        <input class="form-control" asp-for="Book.Title" /> 
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SelectedAuthorId">Author</label>
+        <select class="custom-select" asp-for="SelectedAuthorId" asp-items="@Model.Authors">
+            <option>Select Author</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SelectedBookStatus">Status</label>
+        <select class="custom-select" asp-for="SelectedBookStatus" asp-items="@Model.BookStatus">
+            <option>Select Book Status</option>
+        </select>
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            <div class="form-group">
+                <label asp-for="Book.StartDate">Start Date</label>
+                <input type="date" class="form-control" asp-for="Book.StartDate" />
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="form-group">
+                <label asp-for="Book.StartDate">End Date</label>
+                <input type="date" class="form-control" asp-for="Book.EndDate" />
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-page="./Delete" asp-route-bookId="@Model.Book.Id" class="btn btn-danger">Delete</a>
+    <a asp-page="./List" class="btn btn-secondary">Cancel</a>
+</form>
