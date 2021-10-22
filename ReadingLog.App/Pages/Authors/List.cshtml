@@ -4,18 +4,30 @@
     ViewData["Title"] = "Authors";
 }
 
-<h3>Authors</h3>
+<h2 class="text-center">Authors List</h2>
 
-<form method="GET">
-    <div class="form-group">
-        <div class="input-group">
-            <input type="search" class="form-control" asp-for="SearchTerm"/>
-            <div class="input-group-append">
-                <button class="btn btn-outline-dark">Search</button>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <a asp-page="./Edit" class="btn btn.sm btn-primary">Add New</a>
+        </div>
+        <div class="col"></div>
+        <div class="col">
+            <form method="GET">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="search" class="form-control" asp-for="SearchTerm"/>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-dark">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-</form>
+</div>
+
+
 
 <table class="table table-sm table-hover">
     <thead>
@@ -38,5 +50,3 @@
         </tr>
     }
 </table>
-
-<a asp-page="./Edit" class="btn btn.sm btn-primary">Add New</a>
