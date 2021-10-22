@@ -36,6 +36,8 @@ namespace ReadingLog.App
 
             services.AddMvc().AddRazorPagesOptions(options => {
                 options.Conventions.AddPageRoute("/Books/List", "");
+                options.Conventions.AddPageRoute("/Books/List", "/Books");
+                options.Conventions.AddPageRoute("/Authors/List", "/Authors");
             });
         }
 
