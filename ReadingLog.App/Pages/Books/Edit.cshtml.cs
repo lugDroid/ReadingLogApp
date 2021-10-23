@@ -67,13 +67,13 @@ namespace ReadingLog.App.Pages.Books
             Book.AuthorId = SelectedAuthorId;
             Book.Status = SelectedBookStatus;
 
-            if (Book.EndDate != DateTime.MinValue && Book.StartDate != DateTime.MinValue)
+            if (Book.EndDate != null && Book.StartDate != null)
             {
                 Book.DaysReading = Book.EndDate - Book.StartDate;
             }
             else
             {
-                Book.DaysReading = TimeSpan.MinValue;
+                Book.DaysReading = TimeSpan.Zero;
             }
             
             if (!ModelState.IsValid)

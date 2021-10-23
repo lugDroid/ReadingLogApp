@@ -44,9 +44,9 @@
             <td>@book.Title</td>
             <td>@Model.AuthorNames[@book.AuthorId]</td>
             <td>@book.Status</td>
-            <td>@(book.StartDate != @DateTime.MinValue ? book.StartDate.ToString("dd-MM-yyyy") : "")</td>
-            <td>@(book.EndDate != @DateTime.MinValue ? book.EndDate.ToString("dd-MM-yyyy") : "")</td>
-            <td>@(book.DaysReading != @TimeSpan.MinValue ? book.DaysReading.Days : "")</td>
+            <td>@(book.StartDate != null ? book.StartDate.Value.ToString("dd-MM-yyyy") : "")</td>
+            <td>@(book.EndDate != null ? book.EndDate.Value.ToString("dd-MM-yyyy") : "")</td>
+            <td>@(book.DaysReading != TimeSpan.Zero ? book.DaysReading.Value.Days : "")</td>
         </tr>
     }
 </table>

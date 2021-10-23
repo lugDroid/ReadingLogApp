@@ -9,8 +9,8 @@ namespace ReadingLog.Core
         public Status Status { get; set; }
         public int AuthorId { get; set; }
         public Author Author { get; set; }
-        public DateTime StartDate { get; set; } = DateTime.MinValue;
-        public DateTime EndDate { get; set; } = DateTime.MinValue;
-        public TimeSpan DaysReading { get; set; } 
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public TimeSpan? DaysReading { get; set; } 
     }
 }
