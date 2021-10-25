@@ -45,12 +45,12 @@ namespace ReadingLog.App.Pages.Authors
 
             if (Author.Id > 0)
             {
-                TempData["EditResult"] = "Udpated";
+                TempData["EditResult"] = $"{Author.FirstName} {Author.LastName} Udpated";
                 logRepository.UpdateAuthor(Author);
             }
             else
             {
-                TempData["EditResult"] = "Saved";
+                TempData["EditResult"] = $"{Author.FirstName} {Author.LastName} Added";
                 logRepository.AddAuthor(Author);
             }
 

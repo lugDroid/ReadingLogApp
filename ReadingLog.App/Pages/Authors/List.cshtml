@@ -6,6 +6,16 @@
 
 <h2 class="text-center font-weight-light">Authors List</h2>
 
+@if (@TempData["EditResult"] != null)
+{
+        <div class="alert alert-primary">@TempData["EditResult"]</div>
+}
+
+@if (@TempData["DeleteResult"] != null)
+{
+        <div class="alert alert-warning">@TempData["DeleteResult"]</div>
+}
+
 <div class="container">
     <div class="row">
         <div class="col">
