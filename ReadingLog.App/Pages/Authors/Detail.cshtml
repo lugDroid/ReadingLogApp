@@ -1,0 +1,32 @@
+@page "{authorId:int}"
+@model ReadingLog.App.Pages.Authors.DetailModel
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<h1>@Model.Author.FirstName @Model.Author.LastName</h1>
+
+<table class="table table-sm table-hover" id="data-table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th># Days</th>
+        </tr>
+    </thead>
+    @foreach (var book in Model.Author.Books)
+    {
+        <tr onclick="location.href = '@(Url.Page("../Books/Edit", new { bookId = book.Id}))'" style="cursor:pointer">
+            <td>@book.Title</td>
+            <td>@book.Status</td>
+            <td>@(book.StartDate != null ? book.StartDate.Value.ToString("dd-MM-yyyy") : "")</td>
+            <td>@(book.EndDate != null ? book.EndDate.Value.ToString("dd-MM-yyyy") : "")</td>
+            <td>@(book.DaysReading != TimeSpan.Zero ? book.DaysReading.Value.Days : "")</td>
+        </tr>
+    }
+</table>
+
+<a asp-page="./Edit" asp-route-authorId="@Model.Author.Id" class="btn btn-primary">Edit Author</a>
+<a asp-page="./List" class="btn btn-secondary">List</a>
