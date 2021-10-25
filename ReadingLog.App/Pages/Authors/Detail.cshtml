@@ -4,7 +4,18 @@
     ViewData["Title"] = "Detail";
 }
 
-<h1>@Model.Author.FirstName @Model.Author.LastName</h1>
+<h2 class="text-center font-weight-light">@Model.Author.FirstName @Model.Author.LastName</h2>
+
+<div class="container mb-3">
+    <div class="row">
+        <div class="col">
+            <a asp-page="./Edit" asp-route-authorId="@Model.Author.Id" class="btn btn-primary">Edit Author</a>
+            <a asp-page="./List" class="btn btn-secondary">List</a>
+        </div>
+        <div class="col"></div>
+        <div class="col"></div>
+    </div>
+</div>
 
 <table class="table table-sm table-hover" id="data-table">
     <thead>
@@ -27,6 +38,3 @@
         </tr>
     }
 </table>
-
-<a asp-page="./Edit" asp-route-authorId="@Model.Author.Id" class="btn btn-primary">Edit Author</a>
-<a asp-page="./List" class="btn btn-secondary">List</a>
