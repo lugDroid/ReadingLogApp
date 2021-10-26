@@ -37,8 +37,6 @@
     </div>
 </div>
 
-
-
 <table class="table table-sm table-hover">
     <thead>
         <tr>
@@ -60,3 +58,16 @@
         </tr>
     }
 </table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            if ($('.alert').length) {
+                setTimeout(function () {
+                    $('.alert').hide();
+                }, 5000);
+            }
+        });
+    </script>    
+}

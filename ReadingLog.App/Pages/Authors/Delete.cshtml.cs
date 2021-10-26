@@ -37,7 +37,7 @@ namespace ReadingLog.App.Pages.Authors
                 return RedirectToPage("./NotFound");
             }
 
-            TempData["DeleteResult"] = $"{Author.FirstName} {Author.LastName} Deleted";
+            TempData["DeleteResult"] = $"Author {Author.FirstName} {Author.LastName} successfully deleted";
             return RedirectToPage("./List");
         }
     }
