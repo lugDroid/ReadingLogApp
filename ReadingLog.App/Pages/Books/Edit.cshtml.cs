@@ -82,12 +82,12 @@ namespace ReadingLog.App.Pages.Books
 
             if (Book.Id > 0)
             {
-                TempData["EditResult"] = "Udpated";
+                TempData["EditResult"] = $"Book {Book.Title} was updated";
                 logRepository.UpdateBook(Book);
             }
             else
             {
-                TempData["EditResult"] = "Saved";
+                TempData["EditResult"] = $"New book {Book.Title} successfully added";
                 logRepository.AddBook(Book);
             }
 

@@ -37,7 +37,7 @@ namespace ReadingLog.App.Pages.Books
                 return RedirectToPage("./NotFound");
             }
 
-            TempData["DeleteMessage"] = $"{Book.Title} was deleted";
+            TempData["DeleteResult"] = $"Book {Book.Title} successfully deleted";
             return RedirectToPage("./List");
         }
     }

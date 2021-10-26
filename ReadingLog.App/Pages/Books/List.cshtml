@@ -6,6 +6,16 @@
 
 <h2 class="text-center font-weight-light">Book Log</h2>
 
+@if (@TempData["EditResult"] != null)
+{
+    <div class="alert alert-primary">@TempData["EditResult"]</div>
+}
+
+@if (@TempData["DeleteResult"] != null)
+{
+    <div class="alert alert-warning">@TempData["DeleteResult"]</div>
+}
+
 <div class="container">
     <div class="row">
         <div class="col">
@@ -16,7 +26,7 @@
             <form method="GET">
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="search" class="form-control" asp-for="SearchTerm"/>
+                        <input type="search" class="form-control" asp-for="SearchTerm" />
                         <div class="input-group-append">
                             <button class="btn btn-outline-dark">Search</button>
                         </div>
@@ -51,19 +61,31 @@
     }
 </table>
 
-@* @section scripts 
+@section scripts 
 {
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/theme.default.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/theme.bootstrap_4.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"></script>
-    <script>
-        $(function() {
-            $("#data-table").tablesorter({
-                sortList : [[3, 0]],
-                headerTemplate : "{icon}{content}",
-                cssIcon : "tablesorter-icon",
-                theme : "default"
-            });
+<script>
+    $(document).ready(function () {
+        if ($('.alert').length) {
+            setTimeout(function () {
+                $('.alert').hide();
+            }, 5000);
+        }
+    });
+</script>
+
+@* <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/theme.default.min.css" />
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/theme.bootstrap_4.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"></script>
+<script>
+    $(function () {
+        $("#data-table").tablesorter({
+            sortList: [[3, 0]],
+            headerTemplate: "{icon}{content}",
+            cssIcon: "tablesorter-icon",
+            theme: "default"
         });
-    </script>
-} *@
+    });
+</script> *@
+}
