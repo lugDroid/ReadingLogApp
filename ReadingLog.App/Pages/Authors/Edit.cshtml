@@ -11,13 +11,20 @@
     <div class="form-group">
         <label asp-for="Author.FirstName">First Name</label>
         <input class="form-control" asp-for="Author.FirstName" />
+        <span class="text-danger" asp-validation-for="Author.FirstName"></span>
     </div>
     <div class="form-group">
         <label asp-for="Author.LastName">Last Name</label>
         <input class="form-control" asp-for="Author.LastName" />
+        <span class="text-danger" asp-validation-for="Author.LastName"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Save</button>
     <a asp-page="./Delete" asp-route-authorId="@Model.Author.Id" class="btn btn-danger">Delete</a>
     <a asp-page="./Detail" asp-route-authorId="@Model.Author.Id" class="btn btn-secondary">Cancel</a>
 </form>
+
+@section scripts
+{
+<partial name="_ValidationScriptsPartial" />
+}

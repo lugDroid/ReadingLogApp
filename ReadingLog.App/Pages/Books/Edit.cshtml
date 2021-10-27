@@ -11,7 +11,8 @@
     
     <div class="form-group">
         <label asp-for="Book.Title">Book Title</label>
-        <input class="form-control" asp-for="Book.Title" /> 
+        <input class="form-control" asp-for="Book.Title" />
+        <span class="text-danger" asp-validation-for="Book.Title"></span>
     </div>
 
     <div class="form-group">
@@ -47,3 +48,8 @@
     <a asp-page="./Delete" asp-route-bookId="@Model.Book.Id" class="btn btn-danger">Delete</a>
     <a href="javascript:history.go(-1)" class="btn btn-secondary">Cancel</a>
 </form>
+
+@section scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

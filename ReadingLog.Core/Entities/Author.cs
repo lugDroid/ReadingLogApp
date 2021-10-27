@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace ReadingLog.Core
@@ -6,7 +7,9 @@ namespace ReadingLog.Core
     public class Author
     {
         public int Id { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
         public IEnumerable<Book> Books { get; set; } = new List<Book>();
 
