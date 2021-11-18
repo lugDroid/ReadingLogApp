@@ -63,13 +63,9 @@ namespace ReadingLog.Data
 
         public IEnumerable<Author> GetAllAuthors()
         {
-            IEnumerable<Author> authors = from a in db.Authors
-                                        select a;
-
-            foreach(var a in authors)
-            {
-                a.Books = GetBooksByAuthorId(a.Id);
-            }
+            IEnumerable<Author> authors = db.Authors
+                //.Select(auth => auth)
+                .Include(auth => auth.Books);
 
             return authors;
         }
@@ -84,22 +80,19 @@ namespace ReadingLog.Data
 
         public Author GetAuthorById(int id)
         {
-            var author = db.Authors.Find(id);
-            author.Books = GetBooksByAuthorId(author.Id);
+            var author = db.Authors
+                .Include(auth => auth.Books)
+                .FirstOrDefault(auth => auth.Id == id);
 
             return author;
         }
 
         public IEnumerable<Author> GetAuthorsByName(string name)
         {
-            IEnumerable<Author> authors = from a in db.Authors
-                                        where a.FirstName.StartsWith(name) || a.LastName.StartsWith(name) || string.IsNullOrEmpty(name)
-                                        orderby a.FirstName
-                                        select a;
-            foreach (var a in authors)
-            {
-                a.Books = GetBooksByAuthorId(a.Id);
-            }
+            IEnumerable<Author> authors = db.Authors
+                .Where(a => (a.FirstName.StartsWith(name) || a.LastName.StartsWith(name) || string.IsNullOrEmpty(name)))
+                .OrderBy(a => a.FirstName)
+                .Include(a => a.Books);
 
             return authors;
         }
@@ -133,15 +126,6 @@ namespace ReadingLog.Data
             entity.State = EntityState.Modified;
 
             return updatedBook;
-        }
-
-        public IEnumerable<Book> GetBooksByAuthorId(int authorId)
-        {
-            var query = from b in db.Books
-                        where b.AuthorId == authorId
-                        select b;
-
-            return query.ToList();
         }
     }
 }
