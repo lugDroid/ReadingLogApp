@@ -64,7 +64,6 @@ namespace ReadingLog.Data
         public IEnumerable<Author> GetAllAuthors()
         {
             IEnumerable<Author> authors = db.Authors
-                //.Select(auth => auth)
                 .Include(auth => auth.Books);
 
             return authors;
@@ -72,10 +71,7 @@ namespace ReadingLog.Data
 
         public IEnumerable<Book> GetAllBooks()
         {
-            var query = from b in db.Books
-                        select b;
-
-            return query;
+            return db.Books.Select(b => b);
         }
 
         public Author GetAuthorById(int id)
@@ -104,12 +100,11 @@ namespace ReadingLog.Data
 
         public IEnumerable<Book> GetBooksByName(string name)
         {
-            var query = from b in db.Books
-                        where b.Title.StartsWith(name) || string.IsNullOrEmpty(name)
-                        orderby b.StartDate descending
-                        select b;
+            IEnumerable<Book> books = db.Books
+                .Where(b => (b.Title.StartsWith(name) || string.IsNullOrEmpty(name)))
+                .OrderByDescending(b => b.StartDate);
 
-            return query;
+            return books;
         }
 
         public Author UpdateAuthor(Author updatedAuthor)
