@@ -14,5 +14,6 @@ namespace ReadingLog.Core
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public TimeSpan? DaysReading { get; set; } 
+        public int Rating { get; set; }
     }
 }
