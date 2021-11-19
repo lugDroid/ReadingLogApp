@@ -89,15 +89,16 @@ namespace ReadingLog.Data
 
             if (string.IsNullOrEmpty(name))
             {
-                authors = db.Authors.ToList();
+                authors = db.Authors
+                    .OrderBy(auth => auth.FirstName)
+                    .Include(auth => auth.Books);                    
             } 
             else
             {
                 authors = db.Authors
                     .Where(auth => (
                         auth.FirstName.ToLower().Contains(name.ToLower()) || 
-                        auth.LastName.ToLower().Contains(name.ToLower()) || 
-                        string.IsNullOrEmpty(name)
+                        auth.LastName.ToLower().Contains(name.ToLower())
                     ))
                     .OrderBy(auth => auth.FirstName)
                     .Include(auth => auth.Books);
@@ -117,13 +118,13 @@ namespace ReadingLog.Data
 
             if (string.IsNullOrEmpty(name))
             {
-                books = db.Books.ToList();
+                books = db.Books.OrderByDescending(b => b.StartDate);
             }
             else
             {
                 books = db.Books
-                .Where(b => b.Title.ToLower().Contains(name.ToLower()))
-                .OrderByDescending(b => b.StartDate);                
+                    .Where(b => b.Title.ToLower().Contains(name.ToLower()))
+                    .OrderByDescending(b => b.StartDate); ;              
             }
 
             return books;
