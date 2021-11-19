@@ -85,10 +85,23 @@ namespace ReadingLog.Data
 
         public IEnumerable<Author> GetAuthorsByName(string name)
         {
-            IEnumerable<Author> authors = db.Authors
-                .Where(a => (a.FirstName.StartsWith(name) || a.LastName.StartsWith(name) || string.IsNullOrEmpty(name)))
-                .OrderBy(a => a.FirstName)
-                .Include(a => a.Books);
+            IEnumerable<Author> authors;
+
+            if (string.IsNullOrEmpty(name))
+            {
+                authors = db.Authors.ToList();
+            } 
+            else
+            {
+                authors = db.Authors
+                    .Where(auth => (
+                        auth.FirstName.ToLower().Contains(name.ToLower()) || 
+                        auth.LastName.ToLower().Contains(name.ToLower()) || 
+                        string.IsNullOrEmpty(name)
+                    ))
+                    .OrderBy(auth => auth.FirstName)
+                    .Include(auth => auth.Books);
+            }
 
             return authors;
         }
@@ -100,9 +113,18 @@ namespace ReadingLog.Data
 
         public IEnumerable<Book> GetBooksByName(string name)
         {
-            IEnumerable<Book> books = db.Books
-                .Where(b => (b.Title.StartsWith(name) || string.IsNullOrEmpty(name)))
-                .OrderByDescending(b => b.StartDate);
+            IEnumerable<Book> books;
+
+            if (string.IsNullOrEmpty(name))
+            {
+                books = db.Books.ToList();
+            }
+            else
+            {
+                books = db.Books
+                .Where(b => b.Title.ToLower().Contains(name.ToLower()))
+                .OrderByDescending(b => b.StartDate);                
+            }
 
             return books;
         }
