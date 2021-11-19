@@ -46,6 +46,7 @@
             <th>Start Date</th>
             <th>End Date</th>
             <th># Days</th>
+            <th>Rating</th>
         </tr>
     </thead>
     @foreach (var book in Model.Books)
@@ -57,6 +58,7 @@
             <td>@(book.StartDate != null ? book.StartDate.Value.ToString("dd-MM-yyyy") : "")</td>
             <td>@(book.EndDate != null ? book.EndDate.Value.ToString("dd-MM-yyyy") : "")</td>
             <td>@(book.DaysReading != TimeSpan.Zero ? book.DaysReading.Value.Days : "")</td>
+            <td>@book.Rating</td>
         </tr>
     }
 </table>
