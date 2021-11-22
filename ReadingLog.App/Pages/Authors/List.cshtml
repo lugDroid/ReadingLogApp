@@ -41,6 +41,7 @@
     <thead>
         <tr>
             <th>Name</th>
+            <th>Avg Rating</th>
             <th>Reading</th>
             <th>Finished</th>
             <th>Abandoned</th>
@@ -51,6 +52,7 @@
     {
         <tr onclick="location.href = '@(Url.Page("Detail", new { authorId = author.Id}))'">
             <td>@author.FirstName @author.LastName</td>
+            <td>@author.GetAvgRating().ToString("0.0")</td>
             <td>@author.GetBooksCount(Core.Status.Reading)</td>
             <td>@author.GetBooksCount(Core.Status.Finished)</td>
             <td>@author.GetBooksCount(Core.Status.Abandoned)</td>

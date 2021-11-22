@@ -22,5 +22,21 @@ namespace ReadingLog.Core
 
             return query.Count();
         }
+
+        public decimal GetAvgRating()
+        {
+            var aggregateRating = 0;
+
+            foreach(var b in Books)
+            {
+                if (b.Status == Status.Finished)
+                    aggregateRating += b.Rating;
+            }
+
+            if (Books.Count() != 0)
+                AvgRating = (decimal)aggregateRating / Books.Count();
+
+            return AvgRating;
+        } 
     }
 }
