@@ -12,6 +12,7 @@ namespace ReadingLog.Core
         [Required]
         public string LastName { get; set; }
         public IEnumerable<Book> Books { get; set; } = new List<Book>();
+        public decimal AvgRating { get; set; }
 
         public int GetBooksCount(Status status)
         {
