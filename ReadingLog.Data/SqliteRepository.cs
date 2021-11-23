@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using ReadingLog.Core;
 using System.Linq;
+using System;
 
 namespace ReadingLog.Data
 {
@@ -109,6 +110,7 @@ namespace ReadingLog.Data
 
         public Book GetBookById(int id)
         {
+            Console.WriteLine(db.Books.Find(id).Authors);
             return db.Books.Find(id);
         }
 
@@ -118,13 +120,16 @@ namespace ReadingLog.Data
 
             if (string.IsNullOrEmpty(name))
             {
-                books = db.Books.OrderByDescending(b => b.StartDate);
+                books = db.Books
+                    .OrderByDescending(b => b.StartDate)
+                    .Include(b => b.Authors);
             }
             else
             {
                 books = db.Books
                     .Where(b => b.Title.ToLower().Contains(name.ToLower()))
-                    .OrderByDescending(b => b.StartDate); ;              
+                    .OrderByDescending(b => b.StartDate)
+                    .Include(b => b.Authors);
             }
 
             return books;
