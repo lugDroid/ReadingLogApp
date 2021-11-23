@@ -55,10 +55,7 @@
             <td>@book.Title</td>
             @* <td>@Model.AuthorNames[@book.AuthorId]</td> *@
             <td>
-                @foreach (var author in @book.Authors)
-                {
-                    <span>@author.FirstName @author.LastName</span>  
-                }
+                @Html.Raw(string.Join(", ", @book.Authors.Select(a => string.Format("<span>{0} {1}</span>", a.FirstName, a.LastName))))
             </td>
             <td>@book.Status</td>
             <td>@(book.StartDate != null ? book.StartDate.Value.ToString("dd-MM-yyyy") : "")</td>

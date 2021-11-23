@@ -17,7 +17,7 @@ namespace ReadingLog.App.Pages.Books
         [BindProperty]
         public Book Book { get; set; }
         [BindProperty]
-        public int SelectedAuthorId { get; set; }
+        public IEnumerable<int> SelectedAuthorsId { get; set; }
         [BindProperty]
         public Status SelectedBookStatus { get; set; }
 
@@ -33,11 +33,11 @@ namespace ReadingLog.App.Pages.Books
         public IActionResult OnGet(int? bookId)
         {
             Authors = logRepository.GetAllAuthors()
+                .OrderBy(a => a.FirstName)
                 .Select(a => new SelectListItem {
                     Value = a.Id.ToString(),
                     Text = $"{a.FirstName} {a.LastName}"
-                })
-                .ToList();
+                });
             
             BookStatus = htmlHelper.GetEnumSelectList<Status>();
             
@@ -57,11 +57,7 @@ namespace ReadingLog.App.Pages.Books
 
             if (Book.Authors.Count > 0)
             {
-                SelectedAuthorId = Book.Authors.FirstOrDefault().Id;
-            }
-            else
-            {
-                SelectedAuthorId = 0;
+                SelectedAuthorsId = Book.Authors.Select(a => a.Id);
             }
 
             SelectedBookStatus = Book.Status;
@@ -71,8 +67,10 @@ namespace ReadingLog.App.Pages.Books
 
         public IActionResult OnPost()
         {
-            //Book.AuthorId = SelectedAuthorId;
-            Book.Authors.Add(logRepository.GetAuthorById(SelectedAuthorId));
+            foreach(var id in SelectedAuthorsId)
+            {
+                Book.Authors.Add(logRepository.GetAuthorById(id));
+            }
             Book.Status = SelectedBookStatus;
 
             if (Book.EndDate != null && Book.StartDate != null)

@@ -16,8 +16,8 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="SelectedAuthorId">Author</label>
-        <select class="custom-select" asp-for="SelectedAuthorId" asp-items="@Model.Authors">
+        <label asp-for="SelectedAuthorsId">Author</label>
+        <select multiple class="custom-select" asp-for="SelectedAuthorsId" asp-items="@Model.Authors">
             <option>Select Author</option>
         </select>
     </div>
