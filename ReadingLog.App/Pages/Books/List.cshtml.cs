@@ -20,9 +20,9 @@ namespace ReadingLog.App.Pages.Books
         {
             this.logRepository = logRepository;
         }
+
         public void OnGet()
         {
-            //Books = logRepository.GetAllBooks();
             Books = logRepository.GetBooksByName(SearchTerm);
             Authors = logRepository.GetAllAuthors();
 
