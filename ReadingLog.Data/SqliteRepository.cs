@@ -110,7 +110,6 @@ namespace ReadingLog.Data
 
         public Book GetBookById(int id)
         {
-            Console.WriteLine(db.Books.Find(id).Authors);
             return db.Books.Find(id);
         }
 
@@ -145,10 +144,27 @@ namespace ReadingLog.Data
 
         public Book UpdateBook(Book updatedBook)
         {
-            var entity = db.Books.Attach(updatedBook);
-            entity.State = EntityState.Modified;
+            // var entity = db.Books.Attach(updatedBook);
+            // entity.State = EntityState.Modified;
 
-            return updatedBook;
+            var book = db.Books
+                .Include(b => b.Authors)
+                .FirstOrDefault(b => b.Id == updatedBook.Id);
+
+            var updatedAuthors = new List<Author>();
+            foreach (var author in updatedBook.Authors)
+            {
+                updatedAuthors.Add(db.Authors
+                    .Include(a => a.Books)
+                    .FirstOrDefault(a => a.Id == author.Id));
+            }
+
+            book.Authors.Clear();
+            book.Authors.AddRange(updatedAuthors);
+
+            db.SaveChanges();
+
+            return book;
         }
     }
 }

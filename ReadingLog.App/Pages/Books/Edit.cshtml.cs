@@ -55,7 +55,15 @@ namespace ReadingLog.App.Pages.Books
                 return RedirectToPage("./NotFound");
             }
 
-            SelectedAuthorId = Book.AuthorId;
+            if (Book.Authors.Count > 0)
+            {
+                SelectedAuthorId = Book.Authors.FirstOrDefault().Id;
+            }
+            else
+            {
+                SelectedAuthorId = 0;
+            }
+
             SelectedBookStatus = Book.Status;
 
             return Page();
@@ -63,7 +71,8 @@ namespace ReadingLog.App.Pages.Books
 
         public IActionResult OnPost()
         {
-            Book.AuthorId = SelectedAuthorId;
+            //Book.AuthorId = SelectedAuthorId;
+            Book.Authors.Add(logRepository.GetAuthorById(SelectedAuthorId));
             Book.Status = SelectedBookStatus;
 
             if (Book.EndDate != null && Book.StartDate != null)

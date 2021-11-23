@@ -53,7 +53,13 @@
     {
         <tr onclick="location.href = '@(Url.Page("Edit", new { bookId = book.Id}))'" style="cursor:pointer">
             <td>@book.Title</td>
-            <td>@Model.AuthorNames[@book.AuthorId]</td>
+            @* <td>@Model.AuthorNames[@book.AuthorId]</td> *@
+            <td>
+                @foreach (var author in @book.Authors)
+                {
+                    <span>@author.FirstName @author.LastName</span>  
+                }
+            </td>
             <td>@book.Status</td>
             <td>@(book.StartDate != null ? book.StartDate.Value.ToString("dd-MM-yyyy") : "")</td>
             <td>@(book.EndDate != null ? book.EndDate.Value.ToString("dd-MM-yyyy") : "")</td>
