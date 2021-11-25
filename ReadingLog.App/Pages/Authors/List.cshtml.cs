@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ReadingLog.Core;
@@ -6,6 +7,7 @@ using ReadingLog.Data;
 
 namespace ReadingLog.App.Pages.Authors
 {
+    [AllowAnonymous]
     public class ListModel : PageModel
     {
         private readonly IReadingLogRepository logRepository;

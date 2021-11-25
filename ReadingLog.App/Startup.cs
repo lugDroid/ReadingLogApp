@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,20 +22,23 @@ namespace ReadingLog.App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
-            //services.AddSingleton<IReadingLogRepository, InMemoryRepository>();
+            services.AddRazorPages().AddMvcOptions(o => o.Filters.Add(new AuthorizeFilter()));
 
             services.AddDbContextPool<ReadingLogDbContext>(options => {
                 options.UseSqlite(Configuration.GetConnectionString("SqliteContext"));
             });
 
             services.AddScoped<IReadingLogRepository, SqliteRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddMvc().AddRazorPagesOptions(options => {
                 options.Conventions.AddPageRoute("/Books/List", "");
                 options.Conventions.AddPageRoute("/Books/List", "/Books");
                 options.Conventions.AddPageRoute("/Authors/List", "/Authors");
             });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +60,7 @@ namespace ReadingLog.App
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
