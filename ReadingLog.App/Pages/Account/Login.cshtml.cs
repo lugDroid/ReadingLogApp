@@ -1,4 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,10 +16,10 @@ namespace ReadingLog.App.Pages.Account
     {
         private readonly IUserRepository _userRepository;
 
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public bool RememberLogin { get; set; }
-        public string ReturnUrl { get; set; }
+        [BindProperty] public string Username { get; set; }
+        [BindProperty] public string Password { get; set; }
+        [BindProperty] public bool RememberLogin { get; set; }
+        [BindProperty] public string ReturnUrl { get; set; }
 
         public LoginModel(IUserRepository userRepository)
         {
@@ -23,17 +28,43 @@ namespace ReadingLog.App.Pages.Account
 
         public IActionResult OnGet(string returnUrl = "/")
         {
+            ReturnUrl = returnUrl;
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             var user = _userRepository.GetByUsernameAndPassword(Username, Password);
 
             if (user == null)
+            {
                 return Unauthorized();
-                
-            return Page();
+            }
+            
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Role, user.Role)
+            };
+
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                principal,
+                new AuthenticationProperties { IsPersistent = RememberLogin }
+            );
+
+            return LocalRedirect(ReturnUrl);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return Redirect("/");
         }
     }
 }
