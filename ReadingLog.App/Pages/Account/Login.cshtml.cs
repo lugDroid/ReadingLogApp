@@ -59,12 +59,5 @@ namespace ReadingLog.App.Pages.Account
 
             return LocalRedirect(ReturnUrl);
         }
-
-        public async Task<IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-            return Redirect("/");
-        }
     }
 }
