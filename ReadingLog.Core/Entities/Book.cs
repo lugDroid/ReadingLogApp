@@ -10,8 +10,6 @@ namespace ReadingLog.Core
         [Required]
         public string Title { get; set; }
         public Status Status { get; set; }
-        //public int AuthorId { get; set; }
-        //public Author Author { get; set; }
         public List<Author> Authors { get; set; } = new List<Author>();
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
