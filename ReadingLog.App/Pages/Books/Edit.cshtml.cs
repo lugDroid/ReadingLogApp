@@ -16,7 +16,7 @@ namespace ReadingLog.App.Pages.Books
         private readonly IHtmlHelper htmlHelper;
 
         [BindProperty] public Book Book { get; set; }
-        [BindProperty] public IEnumerable<int> SelectedAuthorsId { get; set; }
+        [BindProperty] public List<int> SelectedAuthorsId { get; set; } = new List<int>();
         [BindProperty] public Status SelectedBookStatus { get; set; }
 
         public IEnumerable<SelectListItem> Authors { get; set; }
@@ -56,7 +56,7 @@ namespace ReadingLog.App.Pages.Books
 
             if (Book.Authors.Count > 0)
             {
-                SelectedAuthorsId = Book.Authors.Select(a => a.Id);
+                Book.Authors.ForEach(auth => SelectedAuthorsId.Add(auth.Id));
             }
 
             SelectedBookStatus = Book.Status;

@@ -43,7 +43,9 @@ namespace ReadingLog.Data
 
         public Book GetBookById(int id)
         {
-            return db.Books.Find(id);
+            return db.Books
+                .Include(b => b.Authors)
+                .FirstOrDefault(b => b.Id == id);
         }
 
         public Book UpdateBook(Book updatedBook)
