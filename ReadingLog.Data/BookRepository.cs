@@ -60,6 +60,12 @@ namespace ReadingLog.Data
                     .FirstOrDefault(a => a.Id == author.Id));
             }
 
+            book.Title = updatedBook.Title;
+            book.Status = updatedBook.Status;
+            book.StartDate = updatedBook.StartDate;
+            book.EndDate = updatedBook.EndDate;
+            book.Rating = updatedBook.Rating;
+            book.DaysReading = updatedBook.DaysReading;
             book.Authors.Clear();
             book.Authors.AddRange(updatedAuthors);
 
