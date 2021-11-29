@@ -28,7 +28,8 @@ namespace ReadingLog.App
                 options.UseSqlite(Configuration.GetConnectionString("SqliteContext"));
             });
 
-            services.AddScoped<IReadingLogRepository, SqliteRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddMvc().AddRazorPagesOptions(options => {

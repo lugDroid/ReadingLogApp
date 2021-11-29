@@ -9,7 +9,8 @@ namespace ReadingLog.App.Pages.Books
 {
     public class ListModel : PageModel
     {
-        private readonly IReadingLogRepository logRepository;
+        private readonly IBookRepository bookRepository;
+        private readonly IAuthorRepository authorRepository;
 
         public IEnumerable<Book> Books { get; set; }
         public IEnumerable<Author> Authors { get; set; }
@@ -17,15 +18,16 @@ namespace ReadingLog.App.Pages.Books
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
         
-        public ListModel (IReadingLogRepository logRepository)
+        public ListModel (IBookRepository bookRepository, IAuthorRepository authorRepository)
         {
-            this.logRepository = logRepository;
+            this.bookRepository = bookRepository;
+            this.authorRepository = authorRepository;
         }
 
         public void OnGet()
         {
-            Books = logRepository.GetBooksByName(SearchTerm);
-            Authors = logRepository.GetAllAuthors();
+            Books = bookRepository.GetBooksByName(SearchTerm);
+            Authors = authorRepository.GetAllAuthors();
 
             foreach (var auth in Authors)
             {

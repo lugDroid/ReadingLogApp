@@ -7,17 +7,17 @@ namespace ReadingLog.App.Pages.Authors
 {
     public class DeleteModel : PageModel
     {
-        private readonly IReadingLogRepository logRepository;
+        private readonly IAuthorRepository authorRepository;
 
         public Author Author { get; set; }
 
-        public DeleteModel(IReadingLogRepository logRepository)
+        public DeleteModel(IAuthorRepository authorRepository)
         {
-            this.logRepository = logRepository;
+            this.authorRepository = authorRepository;
         }
         public IActionResult OnGet(int authorId)
         {
-            Author = logRepository.GetAuthorById(authorId);
+            Author = authorRepository.GetAuthorById(authorId);
 
             if (Author == null)
            {
@@ -29,8 +29,8 @@ namespace ReadingLog.App.Pages.Authors
 
         public IActionResult OnPost(int authorId)
         {
-            Author = logRepository.DeleteAuthor(authorId);
-            logRepository.Commit();
+            Author = authorRepository.DeleteAuthor(authorId);
+            authorRepository.Commit();
 
             if (Author == null)
             {

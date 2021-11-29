@@ -7,11 +7,11 @@ namespace ReadingLog.App.Pages.Books
 {
     public class DeleteModel : PageModel
     {
-        private readonly IReadingLogRepository logRepository;
+        private readonly IBookRepository logRepository;
 
         public Book Book { get; set; }
 
-        public DeleteModel(IReadingLogRepository logRepository)
+        public DeleteModel(IBookRepository logRepository)
         {
             this.logRepository = logRepository;
         }

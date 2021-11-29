@@ -9,20 +9,20 @@ namespace ReadingLog.App.Pages.Authors
 {
     public class ListModel : PageModel
     {
-        private readonly IReadingLogRepository logRepository;
+        private readonly IAuthorRepository authorRepository;
 
         public IEnumerable<Author> Authors { get; set; }
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
 
-        public ListModel(IReadingLogRepository logRepository)
+        public ListModel(IAuthorRepository authorRepository)
         {
-            this.logRepository = logRepository;
+            this.authorRepository = authorRepository;
         }
 
         public void OnGet()
         {
-            Authors = logRepository.GetAuthorsByName(SearchTerm);
+            Authors = authorRepository.GetAuthorsByName(SearchTerm);
         }
     }
 }

@@ -7,21 +7,21 @@ namespace ReadingLog.App.Pages.Authors
 {
     public class EditModel : PageModel
     {
-        private readonly IReadingLogRepository logRepository;
+        private readonly IAuthorRepository authorRepository;
 
         [BindProperty]
         public Author Author { get; set; }
 
-        public EditModel(IReadingLogRepository logRepository)
+        public EditModel(IAuthorRepository authorRepository)
         {
-            this.logRepository = logRepository;
+            this.authorRepository = authorRepository;
         }
 
         public IActionResult OnGet(int? authorId)
         {
             if (authorId.HasValue)
             {
-                Author = logRepository.GetAuthorById(authorId.Value);
+                Author = authorRepository.GetAuthorById(authorId.Value);
             }
             else
             {
@@ -46,15 +46,15 @@ namespace ReadingLog.App.Pages.Authors
             if (Author.Id > 0)
             {
                 TempData["EditResult"] = $"Author {Author.FirstName} {Author.LastName} was updated";
-                logRepository.UpdateAuthor(Author);
+                authorRepository.UpdateAuthor(Author);
             }
             else
             {
                 TempData["EditResult"] = $"New author {Author.FirstName} {Author.LastName} successfully added";
-                logRepository.AddAuthor(Author);
+                authorRepository.AddAuthor(Author);
             }
 
-            logRepository.Commit();
+            authorRepository.Commit();
             return RedirectToPage("./List");
         }
     }

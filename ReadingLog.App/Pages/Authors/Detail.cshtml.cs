@@ -6,17 +6,17 @@ namespace ReadingLog.App.Pages.Authors
 {
     public class DetailModel : PageModel
     {
-        private readonly IReadingLogRepository logRepository;
+        private readonly IAuthorRepository authorRepository;
 
         public Author Author { get; set; }
 
-        public DetailModel(IReadingLogRepository logRepository)
+        public DetailModel(IAuthorRepository authorRepository)
         {
-            this.logRepository = logRepository;
+            this.authorRepository = authorRepository;
         }
         public void OnGet(int authorId)
         {
-            Author = logRepository.GetAuthorById(authorId);
+            Author = authorRepository.GetAuthorById(authorId);
         }
     }
 }

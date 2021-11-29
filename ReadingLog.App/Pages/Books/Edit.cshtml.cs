@@ -11,28 +11,27 @@ namespace ReadingLog.App.Pages.Books
 {
     public class EditModel : PageModel
     {
-        private readonly IReadingLogRepository logRepository;
+        private readonly IAuthorRepository authorRepository;
+        private readonly IBookRepository bookRepository;
         private readonly IHtmlHelper htmlHelper;
 
-        [BindProperty]
-        public Book Book { get; set; }
-        [BindProperty]
-        public IEnumerable<int> SelectedAuthorsId { get; set; }
-        [BindProperty]
-        public Status SelectedBookStatus { get; set; }
+        [BindProperty] public Book Book { get; set; }
+        [BindProperty] public IEnumerable<int> SelectedAuthorsId { get; set; }
+        [BindProperty] public Status SelectedBookStatus { get; set; }
 
         public IEnumerable<SelectListItem> Authors { get; set; }
         public IEnumerable<SelectListItem> BookStatus { get; set; }
         
-        public EditModel(IReadingLogRepository logRepository, IHtmlHelper htmlHelper)
+        public EditModel(IAuthorRepository authorRepository, IBookRepository bookRepository, IHtmlHelper htmlHelper)
         {
-            this.logRepository = logRepository;
+            this.authorRepository = authorRepository;
+            this.bookRepository = bookRepository;
             this.htmlHelper = htmlHelper;
         }
 
         public IActionResult OnGet(int? bookId)
         {
-            Authors = logRepository.GetAllAuthors()
+            Authors = authorRepository.GetAllAuthors()
                 .OrderBy(a => a.FirstName)
                 .Select(a => new SelectListItem {
                     Value = a.Id.ToString(),
@@ -43,7 +42,7 @@ namespace ReadingLog.App.Pages.Books
             
             if (bookId.HasValue)
             {
-                Book = logRepository.GetBookById(bookId.Value);
+                Book = bookRepository.GetBookById(bookId.Value);
             }
             else
             {
@@ -69,7 +68,7 @@ namespace ReadingLog.App.Pages.Books
         {
             foreach(var id in SelectedAuthorsId)
             {
-                Book.Authors.Add(logRepository.GetAuthorById(id));
+                Book.Authors.Add(authorRepository.GetAuthorById(id));
             }
             Book.Status = SelectedBookStatus;
 
@@ -90,15 +89,16 @@ namespace ReadingLog.App.Pages.Books
             if (Book.Id > 0)
             {
                 TempData["EditResult"] = $"Book {Book.Title} was updated";
-                logRepository.UpdateBook(Book);
+                bookRepository.UpdateBook(Book);
             }
             else
             {
                 TempData["EditResult"] = $"New book {Book.Title} successfully added";
-                logRepository.AddBook(Book);
+                bookRepository.AddBook(Book);
             }
 
-            logRepository.Commit();
+            authorRepository.Commit();
+            bookRepository.Commit();
             return RedirectToPage("./List");
         }
     }
