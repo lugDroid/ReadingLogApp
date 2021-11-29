@@ -7,7 +7,6 @@ using ReadingLog.Data;
 
 namespace ReadingLog.App.Pages.Authors
 {
-    [AllowAnonymous]
     public class ListModel : PageModel
     {
         private readonly IReadingLogRepository logRepository;
