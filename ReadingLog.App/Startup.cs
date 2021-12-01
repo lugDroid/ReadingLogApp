@@ -22,7 +22,8 @@ namespace ReadingLog.App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages().AddMvcOptions(o => o.Filters.Add(new AuthorizeFilter()));
+            //services.AddRazorPages().AddMvcOptions(o => o.Filters.Add(new AuthorizeFilter()));
+            services.AddRazorPages();
 
             services.AddDbContextPool<ReadingLogDbContext>(options => {
                 options.UseSqlite(Configuration.GetConnectionString("SqliteContext"));

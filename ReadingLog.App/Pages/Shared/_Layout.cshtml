@@ -25,8 +25,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Authors/List">Authors</a>
                         </li>
                     </ul>
+                    <partial name="_LoginPartial" />
                 </div>
-                <div>                 
+                @* <div>                 
                     @if(User.Identity.IsAuthenticated)
                     {
                         <span class="navbar-text text-dark mx-2">@User.Identity.Name</span>
@@ -36,7 +37,7 @@
                     {
                         <a asp-page="/Account/Login" class="btn btn-dark">Login</a>
                     }                        
-                </div>
+                </div> *@
             </div>
         </nav>
     </header>
