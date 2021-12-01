@@ -15,12 +15,12 @@ namespace ReadingLog.App.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<IdentityDataContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("IdentityDataContextConnection")));
+                // services.AddDbContext<IdentityDataContext>(options =>
+                //     options.UseSqlServer(
+                //         context.Configuration.GetConnectionString("IdentityDataContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<IdentityDataContext>();
+                // services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                //     .AddEntityFrameworkStores<IdentityDataContext>();
             });
         }
     }
