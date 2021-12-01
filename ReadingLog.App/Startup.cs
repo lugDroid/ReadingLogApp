@@ -32,7 +32,6 @@ namespace ReadingLog.App
 
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddMvc().AddRazorPagesOptions(options => {
                 options.Conventions.AddPageRoute("/Books/List", "");
