@@ -53,10 +53,10 @@
         <tr onclick="location.href = '@(Url.Page("Detail", new { authorId = author.Id}))'" style="cursor:pointer">
             <td>@author.FirstName @author.LastName</td>
             <td>@author.GetAvgRating().ToString("0.0")</td>
-            <td>@author.GetBooksCount(Core.Status.Reading)</td>
-            <td>@author.GetBooksCount(Core.Status.Finished)</td>
-            <td>@author.GetBooksCount(Core.Status.Abandoned)</td>
-            <td>@author.GetBooksCount(Core.Status.ToRead)</td>
+            <td>@author.GetBooksCount(Data.Status.Reading)</td>
+            <td>@author.GetBooksCount(Data.Status.Finished)</td>
+            <td>@author.GetBooksCount(Data.Status.Abandoned)</td>
+            <td>@author.GetBooksCount(Data.Status.ToRead)</td>
         </tr>
     }
 </table>

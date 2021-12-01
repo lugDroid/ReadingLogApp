@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace ReadingLog.Core
+namespace ReadingLog.Data
 {
     public class Author
     {

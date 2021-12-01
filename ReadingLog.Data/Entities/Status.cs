@@ -1,4 +1,4 @@
-namespace ReadingLog.Core
+namespace ReadingLog.Data
 {
     public enum Status
     {

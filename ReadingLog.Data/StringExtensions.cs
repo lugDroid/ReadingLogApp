@@ -2,7 +2,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace ReadingLog.Core
+namespace ReadingLog.Data
 {
     public static class StringExtensions
     {

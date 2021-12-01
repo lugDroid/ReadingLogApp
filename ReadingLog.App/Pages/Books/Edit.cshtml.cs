@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ReadingLog.Core;
 using ReadingLog.Data;
 
 namespace ReadingLog.App.Pages.Books

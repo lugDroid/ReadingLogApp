@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ReadingLog.Data\ReadingLog.Data.csproj" />
-    <ProjectReference Include="..\ReadingLog.Core\ReadingLog.Core.csproj" />
   </ItemGroup>
 
 </Project>

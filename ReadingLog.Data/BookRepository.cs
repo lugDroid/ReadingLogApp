@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using ReadingLog.Core;
 using System.Linq;
 using System;
 

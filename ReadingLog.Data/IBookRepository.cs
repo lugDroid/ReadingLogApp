@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using ReadingLog.Core;
 
 namespace ReadingLog.Data
 {

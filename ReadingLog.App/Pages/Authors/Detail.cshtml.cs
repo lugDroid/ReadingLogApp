@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ReadingLog.Core;
 using ReadingLog.Data;
 
 namespace ReadingLog.App.Pages.Authors
