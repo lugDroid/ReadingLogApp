@@ -82,7 +82,7 @@ namespace ReadingLog.App.Pages.Books
                 Book.DaysReading = TimeSpan.Zero;
             }
 
-            Book.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            //Book.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             if (!ModelState.IsValid)
             {
