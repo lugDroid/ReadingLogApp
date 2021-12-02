@@ -227,7 +227,7 @@ namespace ReadingLog.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ReadingLog.Core.Author", b =>
+            modelBuilder.Entity("ReadingLog.Data.Author", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -249,7 +249,7 @@ namespace ReadingLog.Data.Migrations
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("ReadingLog.Core.Book", b =>
+            modelBuilder.Entity("ReadingLog.Data.Book", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -274,20 +274,25 @@ namespace ReadingLog.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Books");
                 });
 
             modelBuilder.Entity("AuthorBook", b =>
                 {
-                    b.HasOne("ReadingLog.Core.Author", null)
+                    b.HasOne("ReadingLog.Data.Author", null)
                         .WithMany()
                         .HasForeignKey("AuthorsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ReadingLog.Core.Book", null)
+                    b.HasOne("ReadingLog.Data.Book", null)
                         .WithMany()
                         .HasForeignKey("BooksId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -343,6 +348,15 @@ namespace ReadingLog.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ReadingLog.Data.Book", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
