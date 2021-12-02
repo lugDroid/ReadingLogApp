@@ -8,8 +8,8 @@ namespace ReadingLog.Data
     public class Book
     {
         public int Id { get; set; }
-        [Required]
-        public IdentityUser User { get; set; }
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
         [Required]
         public string Title { get; set; }
         public Status Status { get; set; }

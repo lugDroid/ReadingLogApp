@@ -2,16 +2,20 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace ReadingLog.Data
 {
     public class BookRepository : IBookRepository
     {
         private readonly ReadingLogDbContext db;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public BookRepository(ReadingLogDbContext db)
+        public BookRepository(ReadingLogDbContext db, IHttpContextAccessor httpContextAccessor)
         {
             this.db = db;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public IEnumerable<Book> GetAllBooks()
@@ -23,16 +27,20 @@ namespace ReadingLog.Data
         {
             IEnumerable<Book> books;
 
+            var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             if (string.IsNullOrEmpty(name))
             {
                 books = db.Books
                     .OrderByDescending(b => b.StartDate)
+                    .Where(b => b.UserId == userId)
                     .Include(b => b.Authors);
             }
             else
             {
                 books = db.Books
                     .Where(b => b.Title.ToLower().Contains(name.ToLower()))
+                    .Where(b => b.UserId == userId)
                     .OrderByDescending(b => b.StartDate)
                     .Include(b => b.Authors);
             }
@@ -44,6 +52,7 @@ namespace ReadingLog.Data
         {
             return db.Books
                 .Include(b => b.Authors)
+                // .Include(b => b.User)
                 .FirstOrDefault(b => b.Id == id);
         }
 

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -23,15 +24,16 @@ namespace ReadingLog.App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddRazorPages().AddMvcOptions(o => o.Filters.Add(new AuthorizeFilter()));
-            services.AddRazorPages();
+            services.AddRazorPages().AddMvcOptions(o => o.Filters.Add(new AuthorizeFilter()));
+            //services.AddRazorPages();
 
-            services.AddDbContextPool<ReadingLogDbContext>(options => {
+            services.AddDbContext<ReadingLogDbContext>(options => {
                 options.UseSqlite(Configuration.GetConnectionString("SqliteContext"));
             });
 
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddMvc().AddRazorPagesOptions(options => {
                 options.Conventions.AddPageRoute("/Books/List", "");

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -79,9 +81,18 @@ namespace ReadingLog.App.Pages.Books
             {
                 Book.DaysReading = TimeSpan.Zero;
             }
-            
+
+            Book.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             if (!ModelState.IsValid)
             {
+                Console.WriteLine("Model not valid");
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach(var err in errors)
+                {
+                    Console.WriteLine(err.ErrorMessage);
+                }
+
                 return Page();
             }
 
