@@ -52,7 +52,6 @@ namespace ReadingLog.Data
         {
             return db.Books
                 .Include(b => b.Authors)
-                // .Include(b => b.User)
                 .FirstOrDefault(b => b.Id == id);
         }
 

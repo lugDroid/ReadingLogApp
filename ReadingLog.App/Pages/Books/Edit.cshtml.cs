@@ -82,7 +82,6 @@ namespace ReadingLog.App.Pages.Books
                 Book.DaysReading = TimeSpan.Zero;
             }
 
-            //Book.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             if (!ModelState.IsValid)
             {
@@ -103,6 +102,8 @@ namespace ReadingLog.App.Pages.Books
             }
             else
             {
+                Book.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                
                 TempData["EditResult"] = $"New book {Book.Title} successfully added";
                 bookRepository.AddBook(Book);
             }
