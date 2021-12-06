@@ -7,6 +7,8 @@ namespace ReadingLog.Data
     public class Author
     {
         public int Id { get; set; }
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]

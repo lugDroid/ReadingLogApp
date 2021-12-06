@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReadingLog.Data;
 
 namespace ReadingLog.Data.Migrations
 {
     [DbContext(typeof(ReadingLogDbContext))]
-    partial class ReadingLogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211206060646_AuthorUser")]
+    partial class AuthorUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
