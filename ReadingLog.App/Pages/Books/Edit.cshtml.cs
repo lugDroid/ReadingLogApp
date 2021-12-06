@@ -95,6 +95,8 @@ namespace ReadingLog.App.Pages.Books
                 return Page();
             }
 
+            Book.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             if (Book.Id > 0)
             {
                 TempData["EditResult"] = $"Book {Book.Title} was updated";
@@ -102,8 +104,6 @@ namespace ReadingLog.App.Pages.Books
             }
             else
             {
-                Book.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                
                 TempData["EditResult"] = $"New book {Book.Title} successfully added";
                 bookRepository.AddBook(Book);
             }
