@@ -1,16 +1,21 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using System;
 
 namespace ReadingLog.Data
 {
     public class AuthorRepository : IAuthorRepository
     {
         private readonly ReadingLogDbContext db;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public AuthorRepository(ReadingLogDbContext db)
+        public AuthorRepository(ReadingLogDbContext db, IHttpContextAccessor httpContextAccessor)
         {
             this.db = db;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public IEnumerable<Author> GetAllAuthors()
@@ -25,10 +30,13 @@ namespace ReadingLog.Data
         {
             IEnumerable<Author> authors;
 
+            var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             if (string.IsNullOrEmpty(name))
             {
                 authors = db.Authors
                     .OrderBy(auth => auth.FirstName)
+                    .Where(auth => auth.UserId == userId)
                     .Include(auth => auth.Books);
             }
             else
@@ -38,6 +46,7 @@ namespace ReadingLog.Data
                         auth.FirstName.ToLower().Contains(name.ToLower()) ||
                         auth.LastName.ToLower().Contains(name.ToLower())
                     ))
+                    .Where(auth => auth.UserId == userId)
                     .OrderBy(auth => auth.FirstName)
                     .Include(auth => auth.Books);
             }

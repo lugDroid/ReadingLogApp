@@ -1,3 +1,5 @@
+using System;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ReadingLog.Data;
@@ -42,13 +44,15 @@ namespace ReadingLog.App.Pages.Authors
                 return Page();
             }
 
+            Author.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             if (Author.Id > 0)
             {
                 TempData["EditResult"] = $"Author {Author.FirstName} {Author.LastName} was updated";
                 authorRepository.UpdateAuthor(Author);
             }
             else
-            {
+            {    
                 TempData["EditResult"] = $"New author {Author.FirstName} {Author.LastName} successfully added";
                 authorRepository.AddAuthor(Author);
             }
