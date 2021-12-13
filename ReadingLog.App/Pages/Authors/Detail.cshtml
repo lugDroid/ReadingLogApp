@@ -17,6 +17,7 @@
     </div>
 </div>
 
+<h3>Books in your List</h3>
 <table class="table table-sm table-hover" id="data-table">
     <thead>
         <tr>
@@ -37,6 +38,25 @@
             <td>@(book.EndDate != null ? book.EndDate.Value.ToString("dd-MM-yyyy") : "")</td>
             <td>@(book.DaysReading != TimeSpan.Zero ? book.DaysReading.Value.Days : "")</td>
             <td>@book.Rating.ToString("0.0")</td>
+        </tr>
+    }
+</table>
+
+<h3>Other Published Books</h3>
+<table class="table table-sm table-hover">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Authors</th>
+        </tr>
+    </thead>
+    @foreach (var publishedBook in Model.PublishedBooks)
+    {
+        <tr onclick="location.href = '@publishedBook.InfoLink'" style="cursor:pointer">
+            <td>@publishedBook.Title</td>
+            <td>
+                @Html.Raw(string.Join(", ", @publishedBook.Authors))
+            </td>
         </tr>
     }
 </table>

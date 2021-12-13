@@ -2,7 +2,7 @@ using System;
 
 namespace ReadingLog.App
 {
-    public class GoogleBooksResult
+    public class ApiResult
     {
         public int TotalItems { get; set; }
         public Item[] Items { get; set; }
@@ -19,6 +19,7 @@ namespace ReadingLog.App
         public string Subtitle { get; set; }
         public string[] Authors { get; set; }
         public ImageLinks ImageLinks { get; set; }
+        public string InfoLink { get; set; }
     }
 
     public partial class ImageLinks
