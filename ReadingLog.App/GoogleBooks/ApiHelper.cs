@@ -45,21 +45,30 @@ namespace ReadingLog.App
 
                 //Console.WriteLine($"{result.TotalItems} books found for {author.FirstName} {author.LastName}");
                 
-                foreach (var item in result.Items)
+                if (result.TotalItems > 0)
                 {
-                    if (item.VolumeInfo.Authors != null)
+                    foreach (var item in result.Items)
                     {
-                      books.Add(item.VolumeInfo);
-                    }
-                } 
+                        if (item.VolumeInfo.Authors != null && 
+                            item.SaleInfo != null &&
+                            !item.SaleInfo.isEbook &&
+                            item.VolumeInfo.Language == "en" &&
+                            item.VolumeInfo.Authors.Contains($"{author.FirstName} {author.LastName}"))
+                        {
+                        books.Add(item.VolumeInfo);
+                        }
+                    } 
 
-                if ((startIndex + maxResults) < result.TotalItems)
-                {
-                    books.AddRange(await GetAllBooksAsync(author, apiKey, startIndex + maxResults));
+                    if ((startIndex + maxResults) < result.TotalItems)
+                    {
+                        books.AddRange(await GetAllBooksAsync(author, apiKey, startIndex + maxResults));
+                    }
                 }
             }
 
-            return books.OrderBy(b => b.Title).ToList();
+            return books
+                .Distinct()
+                .OrderBy(b => b.Title).ToList();
         }
     }
 }
