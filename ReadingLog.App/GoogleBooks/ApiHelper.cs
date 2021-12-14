@@ -11,15 +11,17 @@ namespace ReadingLog.App
 {
     public static class ApiHelper
     {
-        public static async Task<List<VolumeInfo>> GetAllBooksAsync(Author Author, string apiKey)
+        public static async Task<List<VolumeInfo>> GetAllBooksAsync(Author author, string apiKey, int startIndex = 0)
         {
             var builder = new UriBuilder("https://www.googleapis.com/books/v1/volumes?");
+            const int maxResults = 40;
 
             var query = HttpUtility.ParseQueryString(String.Empty);
-            query["q"] = $"inauthor:\"{Author.FirstName}+{Author.LastName}\"";
+            query["q"] = $"inauthor:\"{author.FirstName}+{author.LastName}\"";
             query["key"] = apiKey;
             query["langRestrict"] = "en";
-            query["maxResults"] = "40";
+            query["maxResults"] = maxResults.ToString();
+            query["startIndex"] = startIndex.ToString();
 
             builder.Query = query.ToString();
             string url = builder.ToString();
@@ -41,7 +43,7 @@ namespace ReadingLog.App
                 var json = await response.Content.ReadAsStringAsync();
                 var result = JsonSerializer.Deserialize<ApiResult>(json, options);
 
-                Console.WriteLine($"{result.TotalItems} books found for {Author.FirstName} {Author.LastName}");
+                //Console.WriteLine($"{result.TotalItems} books found for {author.FirstName} {author.LastName}");
                 
                 foreach (var item in result.Items)
                 {
@@ -50,6 +52,11 @@ namespace ReadingLog.App
                       books.Add(item.VolumeInfo);
                     }
                 } 
+
+                if ((startIndex + maxResults) < result.TotalItems)
+                {
+                    books.AddRange(await GetAllBooksAsync(author, apiKey, startIndex + maxResults));
+                }
             }
 
             return books.OrderBy(b => b.Title).ToList();
