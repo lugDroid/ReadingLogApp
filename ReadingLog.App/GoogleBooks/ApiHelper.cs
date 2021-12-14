@@ -41,11 +41,14 @@ namespace ReadingLog.App
                 var json = await response.Content.ReadAsStringAsync();
                 var result = JsonSerializer.Deserialize<ApiResult>(json, options);
 
-                //Console.WriteLine($"{result.TotalItems} books found for {Author.FirstName} {Author.LastName}");
+                Console.WriteLine($"{result.TotalItems} books found for {Author.FirstName} {Author.LastName}");
                 
                 foreach (var item in result.Items)
                 {
-                    books.Add(item.VolumeInfo);
+                    if (item.VolumeInfo.Authors != null)
+                    {
+                      books.Add(item.VolumeInfo);
+                    }
                 } 
             }
 
